@@ -4,43 +4,49 @@ import './App.css';
 
 
 const App = () => {
-  const course = 'Half Stack application development'
-  const part1 = 'Fundamentals of React'
-  const exercises1 = 10
-  const part2 = 'Using props to pass data'
-  const exercises2 = 7
-  const part3 = 'State of a component'
-  const exercises3 = 14
+  const course = {
+    name: 'Half Stack application development',
+    parts: [{
+      name: 'Fundamentals of React',
+      exercises: 10
+    },
+    {
+      name: 'Using props to pass data',
+      exercises: 7
+    },
+    {
+      name: 'State of a component',
+      exercises: 14
+    }
+    ]
+  }
 
   return (
     <div>
       <h2>Name: Diego Santos</h2>
-      <h3>Exercise 1</h3>
+      <h3>Exercise 1.3-1.5</h3>
       <hr />
       <Header course={course} />
-      <Content content1={part1} content2={part2} content3={part3} num1={exercises1} num2={exercises2} num3={exercises3} />
-      <Total total={exercises1 + exercises2 + exercises3} />
+      <Content parts={course.parts} />
+      <Total parts={course.parts} />
     </div>
   );
 }
 
 const Header = (props) => {
-  return (
-    <div>
-      <h1>{props.course}</h1>
-    </div>
-  );
+  console.log()
+  return <h1>{props.course.name}</h1>
 }
 
+// this version makes use of Part.
+// forEach possible solution as well.
 const Content = (props) => {
   return (
     <div>
       <hr />
-      <Part part={props.content1} exercises={props.num1} />
-      <Part part={props.content2} exercises={props.num2} />
-      <Part part={props.content3} exercises={props.num3} />
-      {props.content}
-
+      <Part part={props.parts[0]} />
+      <Part part={props.parts[1]} />
+      <Part part={props.parts[2]} />
     </div>
   );
 }
@@ -48,15 +54,22 @@ const Content = (props) => {
 const Part = (props) => {
   return (
     <div>
-      <p>Name: {props.part} ---------|----Exercises: {props.exercises} </p>
+      <p>Name: {props.part.name}------|-------Exercises: {props.part.exercises}</p>
     </div>
   );
 }
+
+
 const Total = (props) => {
+  let total = 0;
+  props.parts.forEach(index => {    // used a forEach to iterate through object, use 'index' as the object iter.
+    total += index.exercises;
+  });
+
   return (
     <div>
       <hr />
-      <p>Total: {props.total}</p>
+      <p>Total: {total}</p>
     </div>
   );
 }
